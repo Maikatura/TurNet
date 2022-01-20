@@ -1,0 +1,12 @@
+**/Debug
+**/Library
+**/Temp
+**/.vs
+**/.idea
+**/x64
+**/Intermediate
+**/intermediate
+**/Builds
+**/builds
+**/Build
+**/build
