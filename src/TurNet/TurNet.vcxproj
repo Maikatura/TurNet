@@ -45,14 +45,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)..\..\TurNet\</OutDir>
+    <IntDir>..\Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\TurNet\lib</OutDir>
     <TargetName>$(ProjectName)-Debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\TurNet\</OutDir>
-    <IntDir>Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\TurNet\lib</OutDir>
+    <IntDir>..\Intermediate\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)-Release</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -73,17 +73,19 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>RD /S /Q "$(TargetDir)include"</Command>
+      <Command>RD /S /Q "$(TargetDir)..\"</Command>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.h" "$(TargetDir)\include"
-start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.hpp" "$(TargetDir)\include"
+      <Command>start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.h" "$(TargetDir)..\include"
+start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.hpp" "$(TargetDir)..\include"
 </Command>
     </PreLinkEvent>
     <PostBuildEvent>
-      <Command>RD /S /Q  "$(TargetDir)include\x64"
-RD /S /Q "$(TargetDir)include\$(ConfigurationName)"
-RD /S /Q "$(TargetDir)include\Intermediate"</Command>
+      <Command>del "$(TargetDir)..\include\pch.h"
+del "$(TargetDir)..\include\framework.h"
+del "$(TargetDir)..\include\x64"
+del "$(TargetDir)..\include\$(ConfigurationName)"
+del "$(TargetDir)..\include\Intermediate"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -109,19 +111,21 @@ RD /S /Q "$(TargetDir)include\Intermediate"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>RD /S /Q "$(TargetDir)include"</Command>
+      <Command>RD /S /Q "$(TargetDir)..\"</Command>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.h" "$(TargetDir)\include"
-start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.hpp" "$(TargetDir)\include"
+      <Command>start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.h" "$(TargetDir)..\include"
+start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.hpp" "$(TargetDir)..\include"
 </Command>
     </PreLinkEvent>
     <PostBuildEvent>
-      <Command>RD /S /Q  "$(TargetDir)include\x64"
-RD /S /Q "$(TargetDir)include\$(ConfigurationName)"
-RD /S /Q "$(TargetDir)include\Intermediate"
-RD /S /Q "$(TargetDir)\$(ProjectName)-Release.idb"
-RD /S /Q "$(TargetDir)\$(ProjectName)-Release.pdb"</Command>
+      <Command>del "$(TargetDir)..\include\pch.h"
+del "$(TargetDir)..\include\framework.h"
+del "$(TargetDir)..\include\x64"
+del "$(TargetDir)..\include\$(ConfigurationName)"
+del "$(TargetDir)..\include\Intermediate"
+del "$(TargetDir)$(ProjectName)-Release.idb"
+del "$(TargetDir)$(ProjectName)-Release.pdb"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
