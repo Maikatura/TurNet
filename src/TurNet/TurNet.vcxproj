@@ -21,13 +21,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -46,31 +46,49 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)Builds\</OutDir>
+    <OutDir>$(SolutionDir)..\..\TurNet\</OutDir>
+    <TargetName>$(ProjectName)-Debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\</OutDir>
+    <OutDir>$(SolutionDir)..\..\TurNet\</OutDir>
     <IntDir>Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)-Release</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>RD /S /Q "$(TargetDir)include"</Command>
+    </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.h" "$(TargetDir)\include"
+start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.hpp" "$(TargetDir)\include"
+</Command>
+    </PreLinkEvent>
+    <PostBuildEvent>
+      <Command>RD /S /Q  "$(TargetDir)include\x64"
+RD /S /Q "$(TargetDir)include\$(ConfigurationName)"
+RD /S /Q "$(TargetDir)include\Intermediate"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -78,6 +96,10 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -86,14 +108,29 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>RD /S /Q "$(TargetDir)include"</Command>
+    </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.h" "$(TargetDir)\include"
+start xcopy /E /Y /R /I "$(SolutionDir)TurNet\*.hpp" "$(TargetDir)\include"
+</Command>
+    </PreLinkEvent>
+    <PostBuildEvent>
+      <Command>RD /S /Q  "$(TargetDir)include\x64"
+RD /S /Q "$(TargetDir)include\$(ConfigurationName)"
+RD /S /Q "$(TargetDir)include\Intermediate"
+RD /S /Q "$(TargetDir)\$(ProjectName)-Release.idb"
+RD /S /Q "$(TargetDir)\$(ProjectName)-Release.pdb"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h" />
+    <ClInclude Include="Client\Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Client\Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
