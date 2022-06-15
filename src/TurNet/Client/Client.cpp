@@ -61,7 +61,7 @@ TurNet::ClientTCP::ClientTCP()
 	// Close Listening socket
 
 
-	// While loop: accept and echo message back to client
+	// While loop: accept and echo MessageData back to client
 
 
 }

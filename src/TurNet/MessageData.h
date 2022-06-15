@@ -1,23 +1,60 @@
 #pragma once
 #include <map>
+#include <iostream>
+#include <vector>
 
-class MessageData
+namespace TurNet
 {
-public:
+	
+	template <typename T>
+	struct MessageHeader
+	{
+		T id {};
+		uint32_t size = 0;
+	};
 
-	template<typename T>
-	void operator<<(T aData);
+	template <typename T>
+	class MessageData
+	{
+		MessageHeader<T> header {};
+		std::vector<uint8_t> body;
 
-	template<typename T>
-	T operator>>(T aVariable);
+		[[nodiscard("You don't do anything with the size!")]] size_t size() const
+		{
+			return body.size();
+		}
 
-private:
+		friend std::ostream& operator << (std::ostream& os, const MessageData<T>& msg)
+		{
+			os << "ID:" << static_cast<int>(msg.header.id) << " Size:" << msg.header.size;
+			return os;
+		}
 
-	std::map<size_t, size_t> myBuffer;
-};
+		template<typename DataType>
+		friend MessageData<T>& operator<<(MessageData<T>& msg, const DataType& data) {
+			static_assert(std::is_standard_layout<DataType>::value, "Data is too complex to be pushed into vector");
+			size_t i = msg.body.size();
+			msg.body.resize(msg.body.size() + sizeof(DataType));
+			std::memcpy(msg.body.data() + i, &data, sizeof(DataType));
+			msg.header.size = msg.size();
 
-template <typename T>
-void MessageData::operator<<(T aData)
-{
-	myBuffer.insert(aData);
+			return msg;
+		}
+
+		template<typename DataType>
+		friend MessageData<T>& operator>>(MessageData<T>& msg, DataType& data)
+		{
+			static_assert(std::is_standard_layout<DataType>::value, "Data is too complex to be pulled from vector");
+			size_t i = msg.body.size() - sizeof(DataType);
+			std::memcpy(&data, msg.body.data() + i, sizeof(DataType));
+			msg.body.resize(i);
+			msg.header.size = msg.size();
+
+			return msg;
+		}
+	};
+
+
+	
+
 }
