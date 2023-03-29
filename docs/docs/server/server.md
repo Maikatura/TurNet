@@ -1,12 +1,12 @@
 ---
 layout: default
-title: UI Components
+title: Server
 nav_order: 3
 has_children: true
-permalink: /docs/ui-components
+permalink: /docs/server
 ---
 
-# UI Components
+# Server
 
 Server stuff
 {: .fs-6 .fw-300 }

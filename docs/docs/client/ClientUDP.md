@@ -1,10 +1,9 @@
 ---
 layout: default
-title: Tables
-parent: Server
+title: ClientUDP
+parent: ClientUDP
 nav_order: 1
 ---
 
 :)
-
 

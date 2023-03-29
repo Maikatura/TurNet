@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Tables
-parent: Server
+title: TurCompare
+parent: Utilities
 nav_order: 1
 ---
 
